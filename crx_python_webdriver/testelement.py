@@ -236,5 +236,11 @@ class TestElement:
             offset_y += 1
         ActionChains(self.driver).drag_and_drop_by_offset(source, offset_x, offset_y).perform()
 
-    def get_text(self, value=None):
+    def text(self, value=None):
         return self.select_quick().text
+
+    def get_text(self, element, index=None):
+        """
+        TODO: Remove, deprecated.
+        """
+        return self.text(element, index=index)
