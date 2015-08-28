@@ -1,6 +1,7 @@
 from testelement import TestElement, a
 import time
 from conf import settings
+from urlparse import urlparse
 
 
 class TestPage(object):
@@ -85,7 +86,20 @@ class TestPage(object):
         url = url or self.definitions['goto']['value']
         if url_args:
             url = url % url_args
+
+        # Get the current url so we can avoid the goto and delay if necessary.
+        current_url_components = urlparse(self.driver.current_url)
+        current_url = current_url_components.path
+        if current_url_components.fragment:
+            current_url += '#{}'.format(current_url_components.fragment)
+        # Strip out double-slashes.
+        current_url = current_url.replace('//','/')
+        if url == current_url:
+            print "can't goto({}), already there".format(url)
+            return
+
         self.testcase.navigate_to(url)
+        print 'goto(%s)' % url
         time.sleep(settings.GOTO_DELAY)
 
     def click(self, element, index=None):
