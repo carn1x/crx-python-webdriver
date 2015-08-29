@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='crx-python-webdriver',
-    version='0.0.1',
+    version='0.2',
     author='carn1x',
     author_email='github.com/carn1x',
     packages=['crx_python_webdriver'],
