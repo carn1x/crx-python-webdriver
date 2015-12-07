@@ -78,7 +78,7 @@ class TestPage(object):
             ret = getattr(element, command)(value)
         return ret
 
-    def goto(self, url=None, url_args=None):
+    def goto(self, url=None, url_args=None, force=False):
         """
         Navigates the browser.
         By default goes to the definition keyed by 'goto'.
@@ -93,8 +93,8 @@ class TestPage(object):
         if current_url_components.fragment:
             current_url += '#{}'.format(current_url_components.fragment)
         # Strip out double-slashes.
-        current_url = current_url.replace('//','/')
-        if url == current_url:
+        current_url = current_url.replace('//', '/')
+        if url == current_url and not force:
             print "can't goto({}), already there".format(url)
             return
 
